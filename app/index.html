@@ -22,6 +22,7 @@
       function App() {
         const [jobs, setJobs] = React.useState([]);
         const [showForm, setShowForm] = React.useState(false); // New state to toggle form display
+        const [loading, setLoading] = React.useState(false);
 
         React.useEffect(() => {
           fetch("/")
@@ -30,25 +31,40 @@
             .catch((error) => console.error("Error fetching data:", error));
         }, []);
 
-        const addJob = (job) => {
-          setJobs([...jobs, job]);
-          setShowForm(false); // Hide form after adding job
-        };
+        const handleSubmit = async (event) => {
+          setLoading(true);
 
-        const handleSubmit = (event) => {
           event.preventDefault();
           const { company, role } = event.target.elements;
-          addJob({
-            id: jobs.length + 1,
-            company: company.value,
-            role: role.value,
-            date: new Date().toISOString(),
-            status: "Pending",
-          });
+
+          try {
+            const response = await fetch("/", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                company: company.value,
+                role: role.value,
+              }),
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            setJobs([
+              ...jobs,
+              { role: role.value, company: company.value, status: "applied" },
+            ]);
+            setLoading(false);
+            setShowForm(false); // Hide form after adding job
+          } catch (error) {
+            console.error("Failed to add job:", error);
+          }
         };
 
         return (
-          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 transition-all">
+          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
             <div className="flex flex-col mb-3">
               <h1 className="text-3xl font-bold underline text-center text-blue-600 mb-6">
                 Job Applications
@@ -91,6 +107,23 @@
                     type="submit"
                     className="bg-blue-500 text-white py-2 px-4 rounded"
                   >
+                    {loading && (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-loader-2 inline animate-spin"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M12 3a9 9 0 1 0 9 9" />
+                      </svg>
+                    )}
                     Submit
                   </button>
                 </form>
