@@ -1,5 +1,5 @@
 // https://docs.deno.com/runtime/manual/basics/testing/
-import createApp from "./app.ts";
+import { createApp } from "./app.ts";
 import { assertEquals } from "https://deno.land/std/assert/mod.ts";
 
 const mockDb = {

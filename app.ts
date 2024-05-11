@@ -20,13 +20,18 @@ class DB {
     const res = await this.kv.get(["job", id]);
     return res.value;
   }
+  async getAllJobEntries() {
+    const allEntries = await Array.fromAsync(this.kv.list({ prefix: ["job"] }));
+    return allEntries.map((entry: any) => entry.value);
+  }
 }
 
 function createApp(db: any) {
   const app = new Hono();
 
-  app.get("/", (c) => {
-    return c.text("Hello Hono!");
+  app.get("/", async (c) => {
+    const entries = await db.getAllJobEntries();
+    return c.json(entries);
   });
 
   app.post("/", async (c) => {
