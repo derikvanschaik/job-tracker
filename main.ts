@@ -1,5 +1,6 @@
-import createApp from "./app.ts";
+import { createApp, DB } from "./app.ts";
 
-const app = createApp();
+const db = new DB(await Deno.openKv());
+const app = createApp(db);
 
 Deno.serve(app.fetch);

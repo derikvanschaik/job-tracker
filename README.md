@@ -2,8 +2,13 @@
 deno task start
 ```
 
-to test locally run this command: 
+test: 
 
 ```
 API_URL=http://localhost/ deno test --allow-env main_test.ts
+```
+to run:
+
+```
+deno run -A --unstable main.ts
 ```
