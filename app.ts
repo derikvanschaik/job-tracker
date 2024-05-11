@@ -16,6 +16,10 @@ class DB {
   async createJobEntry(jobEntry: JobEntry) {
     await this.kv.set(["job", jobEntry.id], jobEntry);
   }
+  async getJobEntry(id: any) {
+    const res = await this.kv.get(["job", id]);
+    return res.value;
+  }
 }
 
 function createApp(db: any) {
@@ -33,6 +37,12 @@ function createApp(db: any) {
     const id = crypto.randomUUID();
     await db.createJobEntry({ company, role, date, status, id });
     return c.json({ company, role, date, status, id });
+  });
+
+  app.get("/:job_id", async (c) => {
+    const jobId = c.req.param("job_id");
+    const entry = await db.getJobEntry(jobId);
+    return c.json(entry);
   });
 
   return app;
