@@ -24,7 +24,7 @@ jobs:
           deno-version: v1.x
 
       - name: Test App
-        run: "deno test main_test.ts"
+        run: "deno test --allow-env main_test.ts"
         env:
           API_URL: http://localhost/
 
