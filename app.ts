@@ -1,4 +1,6 @@
 import { Hono } from "https://deno.land/x/hono@v4.3.4/mod.ts";
+import { serveStatic } from "https://deno.land/x/hono/middleware.ts";
+
 type JobStatus = "applied" | "selected_for_interview" | "rejected" | "accepted";
 interface JobEntry {
   company: string;
@@ -28,6 +30,9 @@ class DB {
 
 function createApp(db: any) {
   const app = new Hono();
+
+  // serve front end + static files here
+  app.use("/app/*", serveStatic({ root: "./" }));
 
   app.get("/", async (c) => {
     const entries = await db.getAllJobEntries();
