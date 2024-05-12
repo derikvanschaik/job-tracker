@@ -26,6 +26,9 @@ class DB {
     const allEntries = await Array.fromAsync(this.kv.list({ prefix: ["job"] }));
     return allEntries.map((entry: any) => entry.value);
   }
+  async updateJobEntry(updatedJob: any) {
+    await this.kv.set(["job", updatedJob.id], updatedJob);
+  }
 }
 
 function createApp(db: any) {
@@ -53,6 +56,13 @@ function createApp(db: any) {
     const jobId = c.req.param("job_id");
     const entry = await db.getJobEntry(jobId);
     return c.json(entry);
+  });
+
+  app.put("/:job_id", async (c) => {
+    const updatedEntry = await c.req.json();
+    await db.updateJobEntry(updatedEntry);
+    c.status(200);
+    return c.json({ messsage: "successfully updated" });
   });
 
   return app;
