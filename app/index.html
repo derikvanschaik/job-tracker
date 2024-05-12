@@ -21,7 +21,7 @@
     <script type="text/babel">
       function App() {
         const [jobs, setJobs] = React.useState([]);
-        const [showForm, setShowForm] = React.useState(false); // New state to toggle form display
+        const [showForm, setShowForm] = React.useState(false);
         const [loading, setLoading] = React.useState(false);
 
         React.useEffect(() => {
@@ -33,7 +33,6 @@
 
         const handleSubmit = async (event) => {
           setLoading(true);
-
           event.preventDefault();
           const { company, role } = event.target.elements;
 
@@ -57,81 +56,81 @@
               { role: role.value, company: company.value, status: "applied" },
             ]);
             setLoading(false);
-            setShowForm(false); // Hide form after adding job
+            setShowForm(false);
           } catch (error) {
             console.error("Failed to add job:", error);
           }
         };
 
         return (
-          <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-            <div className="flex flex-col mb-3">
-              <h1 className="text-3xl font-bold underline text-center text-blue-600 mb-6">
-                Job Applications
-              </h1>
-              {!showForm && (
-                <button
-                  className="bg-transparent text-blue-700 font-semibold py-2 px-4 border border-blue-500 rounded"
-                  onClick={() => setShowForm(true)}
-                >
-                  Add New
-                </button>
-              )}
-            </div>
-
-            {showForm ? (
-              <div>
-                <button
-                  className="bg-transparent text-blue-700 font-semibold py-2 px-4 border border-blue-500 rounded mb-4"
-                  onClick={() => setShowForm(false)}
-                >
-                  Back to browse
-                </button>
-                <form
-                  onSubmit={handleSubmit}
-                  className="bg-white p-4 rounded-lg shadow"
-                >
-                  <input
-                    className="border rounded p-2 m-2"
-                    name="company"
-                    placeholder="Company"
-                    required
-                  />
-                  <input
-                    className="border rounded p-2 m-2"
-                    name="role"
-                    placeholder="Role"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="bg-blue-500 text-white py-2 px-4 rounded"
-                  >
-                    {loading && (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="icon icon-tabler icons-tabler-outline icon-tabler-loader-2 inline animate-spin"
+          <div className="w-full bg-gray-100">
+            <div className="flex flex-row items-start justify-center min-h-screen max-w-screen-xl mx-auto">
+              <div className="w-1/3 p-4">
+                {showForm ? (
+                  <div>
+                    <button
+                      className="bg-transparent text-blue-700 font-semibold py-2 px-4 border border-blue-500 rounded mb-4"
+                      onClick={() => setShowForm(false)}
+                    >
+                      Cancel
+                    </button>
+                    <form
+                      onSubmit={handleSubmit}
+                      className="bg-white p-4 rounded-lg shadow"
+                    >
+                      <input
+                        className="border rounded p-2 m-2"
+                        name="company"
+                        placeholder="Company"
+                        required
+                      />
+                      <input
+                        className="border rounded p-2 m-2"
+                        name="role"
+                        placeholder="Role"
+                        required
+                      />
+                      <button
+                        type="submit"
+                        className="bg-blue-500 text-white py-2 px-4 rounded"
                       >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M12 3a9 9 0 1 0 9 9" />
-                      </svg>
-                    )}
-                    Submit
+                        {loading ? (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="icon icon-tabler icon-tabler-loader-2 inline animate-spin"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M12 3a9 9 0 1 0 9 9" />
+                          </svg>
+                        ) : (
+                          "Submit"
+                        )}
+                      </button>
+                    </form>
+                  </div>
+                ) : (
+                  <button
+                    className="bg-transparent text-blue-700 font-semibold py-2 px-4 border border-blue-500 rounded"
+                    onClick={() => setShowForm(true)}
+                  >
+                    Add New
                   </button>
-                </form>
+                )}
               </div>
-            ) : (
-              <div className="space-y-4">
+              <div className="w-2/3 overflow-y-scroll max-h-screen p-4">
                 {jobs.map((job) => (
-                  <div key={job.id} className="bg-white p-4 rounded-lg shadow">
+                  <div
+                    key={job.id}
+                    className="bg-white p-4 rounded-lg shadow mb-4"
+                  >
                     <p>
                       <strong>Company:</strong> {job.company}
                     </p>
@@ -148,7 +147,7 @@
                   </div>
                 ))}
               </div>
-            )}
+            </div>
           </div>
         );
       }

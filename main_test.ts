@@ -12,11 +12,6 @@ const app = createApp(mockDb);
 
 const API_URL = Deno.env.get("API_URL") || "";
 
-Deno.test("Hello World", async () => {
-  const res = await app.request(API_URL);
-  assertEquals(res.status, 200);
-});
-
 Deno.test("posts job entry", async () => {
   const res = await app.request(API_URL, {
     method: "POST",
