@@ -27,31 +27,75 @@
 
         </div>
 
-        <article>
-            <header>Job Site breakdown</header>
-            <div class="grid">
-                <h4>Indeed</h4>
-                <progress value="{{indeed}}" max="{{applied}}"></progress>
-                <h6>{{percentage(indeed, applied)}}</h6>
-            </div>
+        <div class="grid">
+            <article>
+                <header>Job Site breakdown</header>
+                <div class="grid">
+                    <h4>Indeed</h4>
+                    <progress value="{{indeed}}" max="{{applied}}"></progress>
+                    <h6>{{percentage(indeed, applied)}}</h6>
+                </div>
 
-            <div class="grid">
-                <h4>Glassdoor</h4>
-                <progress value="{{glassdoor}}" max="{{applied}}"></progress>
-                <h6>{{percentage(glassdoor, applied)}}</h6>
-            </div>
+                <div class="grid">
+                    <h4>Glassdoor</h4>
+                    <progress value="{{glassdoor}}" max="{{applied}}"></progress>
+                    <h6>{{percentage(glassdoor, applied)}}</h6>
+                </div>
 
-            <div class="grid">
-                <h4>Linkedin</h4>
-                <progress value="{{linkedin}}" max="{{applied}}"></progress>
-                <h6>{{percentage(linkedin, applied)}}</h6>
-            </div>
+                <div class="grid">
+                    <h4>Linkedin</h4>
+                    <progress value="{{linkedin}}" max="{{applied}}"></progress>
+                    <h6>{{percentage(linkedin, applied)}}</h6>
+                </div>
 
-            <div class="grid">
-                <h4>Other</h4>
-                <progress value="{{other}}" max="{{applied}}"></progress>
-                <h6>{{percentage(other, applied)}}</h6>
-            </div>
-        </article>
+                <div class="grid">
+                    <h4>Other</h4>
+                    <progress value="{{other}}" max="{{applied}}"></progress>
+                    <h6>{{percentage(other, applied)}}</h6>
+                </div>
+            </article>
+
+            <article>
+                <header class="grid">
+                    <h5>Applications</h5>
+                    <select>
+                        <option>Year</option>
+                    </select>
+                </header>
+                <div>
+                    <canvas id="myChart" width="200" height="200"></canvas>
+                </div>
+            </article>
+        </div>
     </div>
+    {{set script}}
+        <script>
+            window.addEventListener('load', ()=>{
+                const ctx = document.getElementById('myChart').getContext('2d');
+
+                // Create a new Chart instance
+                const myChart = new Chart(ctx, {
+                    type: 'line', // The type of chart (bar, line, pie, etc.)
+                    data: {
+                        labels: ['January', 'February', 'March', 'April', 'May'], // Labels for the x-axis
+                        datasets: [{
+                            label: 'My First Dataset',
+                            data: [12, 19, 3, 5, 2], // Data values
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)', // Background color of bars
+                            borderColor: 'rgba(255, 99, 132, 1)', // Border color of bars
+                            borderWidth: 1 // Width of the border
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true // Start the y-axis at zero
+                            }
+                        },
+                        lineTension: 0.5
+                    }
+                });
+            })
+        </script>
+    {{/set}}
 {{/layout}}

@@ -11,9 +11,22 @@
     rel="stylesheet"
     href="/static/styles.css"
     >
-    <title>Document</title>
+    <title>Job Tracker</title>
 </head>
 <body>
+    <nav class="container">
+        <ul>
+            <li><strong>Job Tracker</strong></li>
+        </ul>
+        <ul>
+            <li><a href="/">Dashboard</a></li>
+            <li><a href="browse">browse</a></li>
+            <li><a href="/new" role="button">New</a></li>
+        </ul>
+    </nav>
+
     {{content}}
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{script}}
 </html>

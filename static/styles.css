@@ -3,3 +3,9 @@
     margin: 0 auto;
     margin-top: 40px;
 }
+#myChart{
+    height: auto !important;
+    width: 350px !important;
+    max-width: 100% !important;
+    margin: 0 auto;
+}
