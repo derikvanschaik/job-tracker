@@ -1,0 +1,57 @@
+{{ layout "./layout.vto"}}
+    <div class="dashboard-container">
+        <div class="grid">
+            <article>
+                <header>Applied</header>
+                <h2>600</h2>
+            </article>
+
+            <article>
+                <header>Rejected</header>
+                <h2>50</h2>
+                <progress value="50" max="600" />
+            </article>
+
+
+            <article>
+                <header>Interviewed</header>
+                <h2>5</h2>
+                <progress value="5" max="600" />
+            </article>
+
+            <article>
+                <header>Selected </header>
+                <h2>5</h2>
+                <progress value="5" max="600" />
+            </article>
+
+        </div>
+
+        <article>
+            <header>Job Site breakdown</header>
+            <div class="grid">
+                <h4>Indeed</h4>
+                <progress value="400" max="600"></progress>
+                <h6>60%</h6>
+            </div>
+
+            <div class="grid">
+                <h4>Glassdoor</h4>
+                <progress value="400" max="600"></progress>
+                <h6>60%</h6>
+            </div>
+
+            <div class="grid">
+                <h4>Linkedin</h4>
+                <progress value="400" max="600"></progress>
+                <h6>60%</h6>
+            </div>
+
+            <div class="grid">
+                <h4>Other</h4>
+                <progress value="400" max="600"></progress>
+                <h6>60%</h6>
+            </div>
+        </article>
+    </div>
+{{/layout}}
