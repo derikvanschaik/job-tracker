@@ -97,14 +97,14 @@ app.get("/timecount", async (c) => {
     for (const j of result) {
       const d = new Date(j.dateApplied);
       if (
-        d.getDate() === currentTime.getDate() &&
-        d.getMonth() == currentTime.getMonth() &&
-        d.getFullYear() === currentTime.getFullYear()
+        d.getDate() === currentTimeAgain.getDate() &&
+        d.getMonth() == currentTimeAgain.getMonth() &&
+        d.getFullYear() === currentTimeAgain.getFullYear()
       ) {
         lastThirtyDaysCount[i] += 1;
       }
     }
-    currentTimeAgain.setDate(currentTime.getDate() - 1);
+    currentTimeAgain.setDate(currentTimeAgain.getDate() - 1);
   }
 
   const currentTimeSevenDays = new Date();
@@ -114,9 +114,9 @@ app.get("/timecount", async (c) => {
     for (const j of result) {
       const d = new Date(j.dateApplied);
       if (
-        d.getDate() === currentTime.getDate() &&
-        d.getMonth() == currentTime.getMonth() &&
-        d.getFullYear() === currentTime.getFullYear()
+        d.getDate() === currentTimeSevenDays.getDate() &&
+        d.getMonth() == currentTimeSevenDays.getMonth() &&
+        d.getFullYear() === currentTimeSevenDays.getFullYear()
       ) {
         lastSevenDaysCount[i] += 1;
       }
