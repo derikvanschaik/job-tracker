@@ -79,14 +79,15 @@ app.get("/search", async (c) => {
 
 app.post("/search", async (c) => {
   const { search } = await c.req.parseBody();
-  const template = await env.load("./views/search.vto");
+  const template = await env.load("./components/jobList.vto");
+
   const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
   let jobs: Job[] = res.map((r) => r.value);
   jobs = jobs.filter((job) =>
     job.company.toLowerCase().startsWith((search as string).toLowerCase())
   );
 
-  const t = await template({ jobs, results: true });
+  const t = await template({ jobs });
   return c.html(t.content);
 });
 
@@ -114,15 +115,15 @@ app.get("/browse/:job_id", async (c) => {
   return c.html(t.content);
 });
 
-app.post("/browse/:job_id", async (c) => {
-  const job_id = c.req.param("job_id");
-  const job = await db.get<Job>(["job", job_id]);
-  const body = await c.req.parseBody();
-  const status = body["status"];
-  await db.set(["job", job.value!.id], { ...job.value, status: status });
+// app.post("/browse/:job_id", async (c) => {
+//   const job_id = c.req.param("job_id");
+//   const job = await db.get<Job>(["job", job_id]);
+//   const body = await c.req.parseBody();
+//   const status = body["status"];
+//   await db.set(["job", job.value!.id], { ...job.value, status: status });
 
-  return c.redirect("/browse?notice=saved");
-});
+//   return c.redirect("/browse?notice=saved");
+// });
 
 app.get("/timecount", async (c) => {
   const r = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));

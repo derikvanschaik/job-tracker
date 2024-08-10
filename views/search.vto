@@ -1,21 +1,21 @@
 {{ layout "./layout.vto" { includeScript: false } }}
     <div class="search-container">
-        <form action="/search" method="POST">
+        <form 
+            action="/search" 
+            method="POST" 
+            hx-post="/search" 
+            hx-target="#search-results" 
+            hx-swap="innerHTML">
             <input
                 type="search"
                 name="search"
                 placeholder="Search"
                 aria-label="Search"
-                />
-            <input type="submit"></input>
-            {{if results}}
-                <p>Displaying {{jobs.length}} results.</p>
-            {{/if}}
+            />
+            <input type="submit" value="Search"></input>
         </form>
     </div>
-    {{ if results}}
-        {{include "../components/jobList.vto" {jobs: jobs} }}
 
-    {{/if}}
-
+    <div id="search-results">
+    </div>
 {{/layout}}
