@@ -103,6 +103,17 @@ app.get("/browse", async (c) => {
   return c.html(t.content);
 });
 
+app.get("/browse/:job_id", async (c) => {
+  const res = await db.get(["job", c.req.param("job_id") as string]);
+  const job = res.value;
+
+  const template = await env.load("./views/job.vto");
+  const t = await template({
+    job,
+  });
+  return c.html(t.content);
+});
+
 app.post("/browse/:job_id", async (c) => {
   const job_id = c.req.param("job_id");
   const job = await db.get<Job>(["job", job_id]);

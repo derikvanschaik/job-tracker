@@ -1,0 +1,36 @@
+{{ layout "./layout.vto" { includeScript: true } }}
+        <div class="container">
+            <h1>{{job.company}}</h1>
+            <div>Status: {{job.status}}</div>
+            <div>Job Board: {{job.jobBoard}}</div>
+            <div>Applied: {{job.dateApplied}}</div>
+            <div id="delete">
+                <button id="initial-del">Delete</button>
+                <div id="confirm-del" class="hidden">
+                    This action cannot be undone.
+                    <button>Delete</button>
+                    <button type="button">Cancel</button>
+                </div>
+            </div>
+        </div>
+    {{ set script}}
+        <script>
+            window.addEventListener("load", ()=>{
+            
+                const deleteBtn = document.querySelector("#initial-del");
+                const confirmEl = document.querySelector("#confirm-del")
+                deleteBtn.addEventListener("click", ()=>{
+                    deleteBtn.setAttribute('class', 'hidden');
+                    confirmEl.setAttribute('class', 'show');
+
+                })
+                confirmEl.addEventListener('click', ()=>{
+                    deleteBtn.setAttribute('class', 'show');
+                    confirmEl.setAttribute('class', 'hidden');
+                })
+            
+            
+            })
+        </script>
+    {{/set}}
+{{/layout}}

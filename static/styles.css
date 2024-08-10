@@ -47,3 +47,9 @@
     margin: 0 auto;
     margin-top: 40px;
 }
+.hidden{
+    display: none;
+}
+.show{
+    display: block;
+}

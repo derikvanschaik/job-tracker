@@ -12,7 +12,7 @@
 
         {{for job of jobs}}
             <article class="job-card">
-                <header>{{job.company}}</header>
+                <header><a href="/browse/{{job.id}}">{{job.company}}</a></header>
                 <form action="/browse/{{job.id}}" method="POST">
                     <label>
                         <span>Status</span>
