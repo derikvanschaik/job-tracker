@@ -71,6 +71,25 @@ app.get("/", async (c) => {
   return c.html(result.content);
 });
 
+app.get("/search", async (c) => {
+  const template = await env.load("./views/search.vto");
+  const t = await template({ results: false });
+  return c.html(t.content);
+});
+
+app.post("/search", async (c) => {
+  const { search } = await c.req.parseBody();
+  const template = await env.load("./views/search.vto");
+  const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
+  let jobs: Job[] = res.map((r) => r.value);
+  jobs = jobs.filter((job) =>
+    job.company.toLowerCase().startsWith((search as string).toLowerCase())
+  );
+
+  const t = await template({ jobs, results: true });
+  return c.html(t.content);
+});
+
 app.get("/browse", async (c) => {
   const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
   const jobs: Job[] = res.map((r) => r.value);

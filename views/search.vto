@@ -1,0 +1,30 @@
+{{ layout "./layout.vto" { includeScript: false } }}
+    <div class="search-container">
+        <form action="/search" method="POST">
+            <input
+                type="search"
+                name="search"
+                placeholder="Search"
+                aria-label="Search"
+                />
+            <input type="submit"></input>
+            {{if results}}
+                <p>Displaying {{jobs.length}} results.</p>
+            {{/if}}
+        </form>
+    </div>
+    {{ if results}}
+        <div class="job-list-container">
+
+            {{for job of jobs}}
+                <article class="job-card">
+                    <header>{{job.company}}</header>
+                    <div>Status: {{job.status}}</div>
+                    <div>Job Board: {{job.jobBoard}}</div>
+                </article>
+            {{/for}}
+        </div>
+
+    {{/if}}
+
+{{/layout}}

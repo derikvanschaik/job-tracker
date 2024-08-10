@@ -16,7 +16,6 @@
                 <form action="/browse/{{job.id}}" method="POST">
                     <label>
                         <span>Status</span>
-                        {{job.status}}
                         <select class="status-select" name="status">
                             {{ for option of ["applied", "interviewed", "rejected", "accepted"]}}
                                 {{if job.status === option}}

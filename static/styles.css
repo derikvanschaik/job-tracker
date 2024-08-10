@@ -36,3 +36,14 @@
 #close-icon:hover{
     cursor: pointer;
 }
+#search-link{
+    height: 20px;
+    margin-bottom: 0 !important;
+    width: 50px;
+}
+
+.search-container{
+    max-width: 700px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
