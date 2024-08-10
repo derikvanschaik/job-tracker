@@ -1,0 +1,13 @@
+<div class="job-list-container">
+
+    {{for job of jobs}}
+        <article class="job-card">
+            <header><a href="/browse/{{job.id}}">{{job.company}}</a></header>
+            <div>
+                <div>Status: <h6>{{job.status}}</h6></div>
+                <div>Date applied: <h6>{{job.dateApplied}}</h6></div>
+                <div>Job Board: <h6>{{job.jobBoard}}</h6></div>
+            </div>
+        </article>
+    {{/for}}
+</div>
