@@ -3,8 +3,13 @@ import { serveStatic } from "hono/deno";
 import vento from "https://deno.land/x/vento@v0.9.1/mod.ts";
 import { createRandomJobs } from "./dummyData.ts";
 import { Job } from "./types.ts";
+import { v4 as uuidv4 } from "npm:uuid";
 
-const app = new Hono();
+type Variables = {
+  message: string;
+};
+
+const app = new Hono<{ Variables: Variables }>();
 app.use("/static/*", serveStatic({ root: "./" }));
 
 const env = vento();
@@ -12,8 +17,15 @@ const db = await Deno.openKv();
 
 // todo: in future -- export a database but for now I will just create dummy data upon load
 const dummyJobs = createRandomJobs();
+
+// clear out previous ones
+const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
+for (const j of res) {
+  await db.delete(j.key);
+}
+
 for (const job of dummyJobs) {
-  await db.set(["job", `${job.dateApplied}`], job);
+  await db.set(["job", job.id], job);
 }
 
 app.get("/", async (c) => {
@@ -57,6 +69,29 @@ app.get("/", async (c) => {
     },
   });
   return c.html(result.content);
+});
+
+app.get("/browse", async (c) => {
+  const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
+  const jobs: Job[] = res.map((r) => r.value);
+  const template = await env.load("./views/browse.vto");
+  const notice = c.req.query("notice");
+  const t = await template({
+    jobs: jobs,
+    hasNotice: !!notice,
+    notice: "Your changes were saved successfully",
+  });
+  return c.html(t.content);
+});
+
+app.post("/browse/:job_id", async (c) => {
+  const job_id = c.req.param("job_id");
+  const job = await db.get<Job>(["job", job_id]);
+  const body = await c.req.parseBody();
+  const status = body["status"];
+  await db.set(["job", job.value!.id], { ...job.value, status: status });
+
+  return c.redirect("/browse?notice=saved");
 });
 
 app.get("/timecount", async (c) => {

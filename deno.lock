@@ -4,7 +4,8 @@
     "specifiers": {
       "jsr:@hono/hono@^4.5.4": "jsr:@hono/hono@4.5.4",
       "npm:@types/node": "npm:@types/node@18.16.19",
-      "npm:chartjs-node-canvas": "npm:chartjs-node-canvas@4.1.6_chart.js@3.9.1"
+      "npm:chartjs-node-canvas": "npm:chartjs-node-canvas@4.1.6_chart.js@3.9.1",
+      "npm:uuid": "npm:uuid@10.0.0"
     },
     "jsr": {
       "@hono/hono@4.5.4": {
@@ -354,6 +355,10 @@
       },
       "util-deprecate@1.0.2": {
         "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==",
+        "dependencies": {}
+      },
+      "uuid@10.0.0": {
+        "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==",
         "dependencies": {}
       },
       "webidl-conversions@3.0.1": {

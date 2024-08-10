@@ -5,4 +5,5 @@ export interface Job {
   company: string;
   status: Status;
   jobBoard: JobBoard;
+  id: string;
 }

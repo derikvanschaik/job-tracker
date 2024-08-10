@@ -9,6 +9,10 @@
     >
     <link
     rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css"
+    >
+    <link
+    rel="stylesheet"
     href="/static/styles.css"
     >
     <title>Job Tracker</title>
@@ -28,5 +32,7 @@
     {{content}}
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-{{script}}
+{{if includeScript }}
+    {{script}}
+{{/if}}
 </html>

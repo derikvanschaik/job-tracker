@@ -9,3 +9,30 @@
     max-width: 100% !important;
     margin: 0 auto;
 }
+.job-list-container{
+    max-width: 1024px;
+    margin: 0 auto;
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 50px;
+    row-gap: 10px;
+    justify-content: center;
+}
+.job-card{
+    flex-basis: 40%;
+}
+.notice{
+    width: 500px;
+    margin: 0 auto;
+    position: relative;
+}
+#close-icon{
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    padding: 5px;
+}
+#close-icon:hover{
+    cursor: pointer;
+}

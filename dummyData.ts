@@ -1,4 +1,5 @@
 import { Job, JobBoard } from "./types.ts";
+import { v4 as uuidv4 } from "npm:uuid";
 
 function addDaysUntil(targetDate: Date, startDate: Date) {
   const result = [];
@@ -26,6 +27,7 @@ export function createRandomJobs() {
       company: "Random company " + d.getTime(),
       status: status,
       jobBoard: jobBoard as JobBoard,
+      id: uuidv4(),
     });
   }
 
