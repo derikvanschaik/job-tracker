@@ -73,13 +73,13 @@ app.get("/", async (c) => {
 
 app.get("/search", async (c) => {
   const template = await env.load("./views/search.vto");
-  const t = await template({ results: false });
+  const t = await template();
   return c.html(t.content);
 });
 
 app.post("/search", async (c) => {
   const { search } = await c.req.parseBody();
-  const template = await env.load("./components/jobList.vto");
+  const template = await env.load("./views/searchResults.vto");
 
   const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
   let jobs: Job[] = res.map((r) => r.value);
@@ -87,7 +87,7 @@ app.post("/search", async (c) => {
     job.company.toLowerCase().startsWith((search as string).toLowerCase())
   );
 
-  const t = await template({ jobs });
+  const t = await template({ results: jobs });
   return c.html(t.content);
 });
 
