@@ -16,17 +16,17 @@ const env = vento();
 const db = await Deno.openKv();
 
 // todo: in future -- export a database but for now I will just create dummy data upon load
-const dummyJobs = createRandomJobs();
+// const dummyJobs = createRandomJobs();
 
-// clear out previous ones
-const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
-for (const j of res) {
-  await db.delete(j.key);
-}
+// // clear out previous ones
+// const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
+// for (const j of res) {
+//   await db.delete(j.key);
+// }
 
-for (const job of dummyJobs) {
-  await db.set(["job", job.id], job);
-}
+// for (const job of dummyJobs) {
+//   await db.set(["job", job.id], job);
+// }
 
 app.get("/", async (c) => {
   const template = await env.load("./views/dashboard.vto");
