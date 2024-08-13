@@ -111,6 +111,26 @@ app.get("/browse/:job_id", async (c) => {
   const template = await env.load("./views/job.vto");
   const t = await template({
     job,
+    statusPosted: false,
+  });
+  return c.html(t.content);
+});
+
+app.post("/browse/:job_id", async (c) => {
+  const jobId = c.req.param("job_id") as string;
+  const res = await db.get<Job>(["job", jobId]);
+  const job = res.value;
+
+  const body = await c.req.parseBody();
+  const newStatus = body["status"];
+  const updatedJob = { ...job, status: newStatus };
+  await db.set(["job", jobId], updatedJob);
+
+  const template = await env.load("./views/job.vto");
+  const t = await template({
+    job: updatedJob,
+    statusPosted: true,
+    status: "Your Changes have been saved!",
   });
   return c.html(t.content);
 });

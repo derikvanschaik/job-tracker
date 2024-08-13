@@ -1,35 +1,30 @@
 {{ layout "./layout.vto" { includeScript: true } }}
-        <div class="container">
-            <h1>{{job.company}}</h1>
-            <div>Status: {{job.status}}</div>
-            <div>Job Board: {{job.jobBoard}}</div>
-            <div>Applied: {{job.dateApplied}}</div>
-            <div id="delete">
-                <button id="initial-del">Delete</button>
-                <div id="confirm-del" class="hidden">
-                    This action cannot be undone.
-                    <button>Delete</button>
-                    <button type="button">Cancel</button>
-                </div>
-            </div>
-        </div>
-    {{ set script}}
-        <script>
-            window.addEventListener("load", ()=>{
-            
-                const deleteBtn = document.querySelector("#initial-del");
-                const confirmEl = document.querySelector("#confirm-del")
-                deleteBtn.addEventListener("click", ()=>{
-                    deleteBtn.setAttribute('class', 'hidden');
-                    confirmEl.setAttribute('class', 'show');
 
-                })
-                confirmEl.addEventListener('click', ()=>{
-                    deleteBtn.setAttribute('class', 'show');
-                    confirmEl.setAttribute('class', 'hidden');
-                })
-            
-            
+        {{ if statusPosted}}
+            {{status}}
+        {{/if}}
+        <div class="container">
+            <form action="/browse/{{job.id}}" method="POST">
+                <h1>{{job.company}}</h1>
+                <select id="status-select" name="status">
+                {{ for status of [ "applied" , "rejected" , "interviewed" ,  "accepted"] }}
+                    {{ if status === job.status}}
+                        <option value="{{status}}" selected>{{status}}</option>
+                    {{ else}}
+                        <option value="{{status}}">{{status}}</option>
+                    {{/if}}
+                {{/for}}
+                </select>
+                <div>Job Board: {{job.jobBoard}}</div>
+                <div>Applied: {{job.dateApplied}}</div>
+                <button disabled id="submit-changes-button">Apply Changes</button>
+            </form>
+        </div>
+    {{set script}}
+        <script>
+            const sel = document.querySelector("#status-select");
+            sel.addEventListener("change", ()=>{
+                document.querySelector("#submit-changes-button").removeAttribute("disabled");
             })
         </script>
     {{/set}}
