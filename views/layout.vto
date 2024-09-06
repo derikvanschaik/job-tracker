@@ -18,12 +18,23 @@
     <title>Job Tracker</title>
 </head>
 <body>
+{{# modal creates new entry#}}
+
+<dialog open="false" id="create-new">
+  <article>
+    <header>
+    hello wrold
+    </header>
+  </article>
+</dialog>
+
     <nav class="container">
         <ul>
             <li><strong>Job Tracker</strong></li>
         </ul>
         <ul>
             <li><a href="/">Dashboard</a></li>
+            <li><button onclick="openDialog()">New</button></li>
         </ul>
     </nav>
     <div>
@@ -35,4 +46,11 @@
 {{if includeScript }}
     {{script}}
 {{/if}}
+<script>
+    function openDialog(){
+        console.log('hello world')
+        const dialog = document.querySelector("#create-new");
+        dialog.setAttribute("open", "true")
+    }
+</script>
 </html>
