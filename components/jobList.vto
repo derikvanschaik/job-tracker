@@ -1,12 +1,20 @@
-<div class="job-list-container">
-    {{for job of jobs}}
-        <article class="job-card">
-            <header><a href="/browse/{{job.id}}">{{job.company}}</a></header>
-            <div>
-                <div>Status: <h6>{{job.status}}</h6></div>
-                <div>Date applied: <h6>{{job.dateApplied}}</h6></div>
-                <div>Job Board: <h6>{{job.jobBoard}}</h6></div>
-            </div>
-        </article>
-    {{/for}}
-</div>
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Company</th>
+            <th scope="col">Date Applied</th>
+            <th scope="col">Status</th>
+            <th scope="col">Job Board</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{for job of jobs}}
+            <tr>
+                <th scope="row">{{job.company}}</th>
+                <td>{{ formatDate(job.dateApplied) }}</td>
+                <td>{{job.status}}</td>
+                <td>{{job.jobBoard}}</td>
+            </tr>
+        {{/for}}
+    </tbody>
+</table>
