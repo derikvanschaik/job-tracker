@@ -40,7 +40,7 @@ app.get("/", async (c) => {
   );
 
   const recentlyApplied = jobs.slice(0, 5);
-  // console.log(recentlyApplied);
+
   const appliedCount: number = jobs.length;
   const rejectedCount: number = jobs.filter(
     (job) => job.status === "rejected"
@@ -57,6 +57,20 @@ app.get("/", async (c) => {
     formatDate: function (dateString: string) {
       return formatDateString(dateString);
     },
+  });
+  return c.html(result.content);
+});
+
+app.get("/browse", async (c) => {
+  const template = await env.load("./views/jobs.vto");
+  const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
+  const jobs: Job[] = res.map((r) => r.value);
+
+  const result = await template({
+    formatDate: function (dateString: string) {
+      return formatDateString(dateString);
+    },
+    jobs,
   });
   return c.html(result.content);
 });

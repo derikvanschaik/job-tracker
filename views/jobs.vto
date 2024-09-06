@@ -1,0 +1,5 @@
+{{ layout "./layout.vto" { includeScript : false} }}
+<div class="container">
+    {{ include '../components/jobList.vto' { formatDate, jobs }}}
+</div>
+{{/layout}}
