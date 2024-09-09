@@ -9,15 +9,7 @@
             <th scope="col"></th>
         </tr>
     </thead>
-    <tbody>
-        {{for job of jobs}}
-            <tr>
-                <th scope="row">{{job.company}}</th>
-                <td>{{ formatDate(job.dateApplied) }}</td>
-                <td>{{job.status}}</td>
-                <td >{{job.jobBoard}}</td>
-                <td><span style="cursor:pointer" hx-delete="/job/{{job.id}}" hx-trigger="click" hx-target="closest tr" hx-replace="outerHTML">{{ include './deleteIcon.vto'}}</span></td>
-            </tr>
-        {{/for}}
+
+    <tbody hx-get="/jobs" hx-trigger="load, refreshData from:body">
     </tbody>
 </table>

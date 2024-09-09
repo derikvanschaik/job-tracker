@@ -1,30 +1,13 @@
 {{ layout "./layout.vto" { includeScript : false} }}
+
     <div class="dashboard-container">
-        <div class="grid">
-            <article>
-                <header>Applied</header>
-                <h2>{{applied}}</h2>
-            </article>
-
-            <article>
-                <header>Rejected</header>
-                <h2>{{rejected}}</h2>
-                <progress value="{{rejected}}" max="{{applied}}" />
-            </article>
-
-
-            <article>
-                <header>Interviewed</header>
-                <h2>{{interviewed}}</h2>
-                <progress value="{{interviewed}}" max="{{applied}}" />
-            </article>
-
+        <div class="grid" hx-get="/stats" hx-trigger="load, refreshData from:body">
         </div>
 
         <div class="grid">
             <article>
                 <header>Recent Applications</header>
-                {{ include '../components/jobList.vto' { formatDate, jobs: recentlyApplied } }}
+                {{ include '../components/jobList.vto'}}
                 <footer>
                     <a href="/browse">View All</a>
                 </footer>
