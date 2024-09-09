@@ -3,57 +3,10 @@
     margin: 0 auto;
     margin-top: 40px;
 }
-#myChart{
-    height: auto !important;
-    width: 350px !important;
-    max-width: 100% !important;
-    margin: 0 auto;
-}
-.job-list-container{
-    max-width: 1024px;
-    margin: 0 auto;
-    margin-top: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 50px;
-    row-gap: 10px;
-    justify-content: center;
-}
-.job-card{
-    flex-basis: 40%;
-}
-.notice{
-    width: 500px;
-    margin: 0 auto;
-    position: relative;
-}
-#close-icon{
-    position: absolute;
-    top: 0px;
-    right: 5px;
-    padding: 5px;
-}
-#close-icon:hover{
-    cursor: pointer;
-}
-#search-link{
-    height: 20px;
-    margin-bottom: 0 !important;
-    width: 50px;
+#create-new   header{
+    text-align: right;
 }
 
-.search-container{
-    max-width: 700px;
-    margin: 0 auto;
-    margin-top: 40px;
-}
-.results-information{
-    max-width: 700px;
-    margin: 0 auto;
-}
-.hidden{
-    display: none;
-}
-.show{
-    display: block;
+#create-new  svg{
+    cursor: pointer;
 }

@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
 import vento from "https://deno.land/x/vento@v0.9.1/mod.ts";
 import { createRandomJobs } from "./dummyData.ts";
-import { Job } from "./types.ts";
+import { Job, JobBoard, Status } from "./types.ts";
 import { v4 as uuidv4 } from "npm:uuid";
 import { formatDateString } from "./utils/formatDate.ts";
 
@@ -59,6 +59,29 @@ app.get("/", async (c) => {
     },
   });
   return c.html(result.content);
+});
+
+app.post("/job", async (c) => {
+  const { company, board } = await c.req.parseBody();
+
+  const dateApplied = new Date();
+  const id = uuidv4();
+  const status = "applied";
+  const newJob: Job = {
+    company: company as string,
+    dateApplied,
+    id,
+    status,
+    jobBoard: board as JobBoard,
+  };
+  const result = await db.set(["job", id], newJob);
+  if (result.ok) {
+    const template = await env.load("./components/entryNotice.vto");
+    const res = await template();
+    return c.html(res.content);
+  } else {
+    return c.html(`<h1>There was an error completing your request</h1>`);
+  }
 });
 
 app.get("/browse", async (c) => {
