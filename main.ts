@@ -84,6 +84,12 @@ app.post("/job", async (c) => {
   }
 });
 
+app.delete("/job/:id", async (c) => {
+  const id = c.req.param("id");
+  await db.delete(["job", id]);
+  return c.html("");
+});
+
 app.get("/browse", async (c) => {
   const template = await env.load("./views/jobs.vto");
   const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));

@@ -5,6 +5,8 @@
             <th scope="col">Date Applied</th>
             <th scope="col">Status</th>
             <th scope="col">Job Board</th>
+            {{# delete col #}}
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
@@ -13,7 +15,8 @@
                 <th scope="row">{{job.company}}</th>
                 <td>{{ formatDate(job.dateApplied) }}</td>
                 <td>{{job.status}}</td>
-                <td>{{job.jobBoard}}</td>
+                <td >{{job.jobBoard}}</td>
+                <td><span style="cursor:pointer" hx-delete="/job/{{job.id}}" hx-trigger="click" hx-target="closest tr" hx-replace="outerHTML">{{ include './deleteIcon.vto'}}</span></td>
             </tr>
         {{/for}}
     </tbody>
