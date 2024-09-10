@@ -10,3 +10,9 @@
 #create-new  svg{
     cursor: pointer;
 }
+
+.job-list-filters{
+    width: 350px;
+    margin-top: 60px;
+    margin-bottom: 40px;
+}

@@ -1,5 +1,62 @@
 {{ layout "./layout.vto" { includeScript : false} }}
+
+
 <div class="container">
-    {{ include '../components/jobList.vto' {  queryParams: '' }}}
+    <details>
+        <summary>Filters</summary>
+            <form hx-get="/jobs" hx-target="#jobs-list">
+                <div class="grid">
+                
+                    <fieldset>
+                        <label>Sort by time:</label><br>
+                        <input type="radio" id="none" name="sort" value="-1" checked>
+                        <label for="none">None</label><br>
+
+                        <input type="radio" id="ascending" name="sort" value="0">
+                        <label for="ascending">Ascending</label><br>
+
+                        <input type="radio" id="descending" name="sort" value="1">
+                        <label for="descending">Descending</label><br>
+                    </fieldset>
+
+                    <fieldset>
+                        <label>Job Board:</label><br>
+                        <input type="radio" id="none" name="board" value="all" checked>
+                        <label for="none">all</label><br>
+
+                        <input type="radio" id="linkedin" name="board" value="linkedin">
+                        <label for="ascending">Linkedin</label><br>
+
+                        <input type="radio" id="glassdoor" name="board" value="glassdoor">
+                        <label for="descending">Glassdoor</label><br>
+
+                        <input type="radio" id="indeed" name="board" value="indeed">
+                        <label for="descending">Indeed</label><br>
+                    </fieldset>
+
+                    <fieldset>
+                        <label>Job Status:</label><br>
+                        <input type="radio" id="applied" name="status" value="applied" checked>
+                        <label for="applied">Applied</label><br>
+
+                        <input type="radio" id="rejected" name="status" value="rejected">
+                        <label for="rejected">Rejected</label><br>
+
+                        <input type="radio" id="interviewed" name="status" value="interviewed">
+                        <label for="interviewed">Interviewed</label><br>
+
+                        <input type="radio" id="accepted" name="status" value="accepted">
+                        <label for="accepted">Accepted</label><br>
+                    </fieldset>
+
+                </div>
+
+            
+            <button type="submit">Submit</button>
+        </form>
+    </details>
+
+    <div hx-get="/jobs" hx-trigger="load, refreshData from:body" hx-swap="innerHTML" id="jobs-list">
+    </div>
 </div>
 {{/layout}}

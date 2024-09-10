@@ -7,7 +7,8 @@
         <div class="grid">
             <article>
                 <header>Recent Applications</header>
-                {{ include '../components/jobList.vto' {queryParams: 'limit=5&sort=0'} }}
+                <div hx-get="/jobs?limit=5&sort=0" hx-trigger="load, refreshData from:body">
+                </div>
                 <footer>
                     <a href="/browse">View All</a>
                 </footer>

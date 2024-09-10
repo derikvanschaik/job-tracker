@@ -4,6 +4,7 @@ import vento from "https://deno.land/x/vento@v0.9.1/mod.ts";
 import { Job, JobBoard } from "./types.ts";
 import { v4 as uuidv4 } from "npm:uuid";
 import { formatDateString } from "./utils/formatDate.ts";
+import { joinGlobs } from "https://deno.land/std@0.205.0/path/glob.ts";
 
 type Variables = {
   message: string;
@@ -49,9 +50,11 @@ app.get("/new", async (c) => {
 
 app.get("/jobs", async (c) => {
   const limit = c.req.query("limit");
+  const sortByTime = c.req.query("sort");
+  const filterByJobBoard = c.req.query("board");
+  const filterByStatus = c.req.query("status");
 
   let sortByTimeType = -1;
-  const sortByTime = c.req.query("sort");
 
   if (sortByTime !== undefined) {
     sortByTimeType = parseInt(sortByTime);
@@ -75,12 +78,19 @@ app.get("/jobs", async (c) => {
     });
   }
 
+  if (filterByJobBoard !== undefined && filterByJobBoard !== "all") {
+    jobs = jobs.filter((j) => j.jobBoard === filterByJobBoard);
+  }
+  if (filterByStatus !== undefined && filterByStatus !== "all") {
+    jobs = jobs.filter((j) => j.status === filterByStatus);
+  }
+
   if (limit !== undefined) {
     const limitJobs = parseInt(limit);
     jobs = jobs.slice(0, limitJobs);
   }
 
-  const template = await env.load("./components/jobsListData.vto");
+  const template = await env.load("./components/jobList.vto");
   const result = await template({
     jobs: jobs,
     formatDate: (d: string) => formatDateString(d),
