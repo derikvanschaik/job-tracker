@@ -48,8 +48,38 @@ app.get("/new", async (c) => {
 });
 
 app.get("/jobs", async (c) => {
+  const limit = c.req.query("limit");
+
+  let sortByTimeType = -1;
+  const sortByTime = c.req.query("sort");
+
+  if (sortByTime !== undefined) {
+    sortByTimeType = parseInt(sortByTime);
+  }
+
   const res = await Array.fromAsync(db.list<Job>({ prefix: ["job"] }));
-  const jobs: Job[] = res.map((r) => r.value);
+  let jobs: Job[] = res.map((r) => r.value);
+
+  if (sortByTimeType === 0) {
+    jobs.sort((a: Job, b: Job) => {
+      return (
+        new Date(a.dateApplied).getTime() - new Date(b.dateApplied).getTime()
+      );
+    });
+  }
+  if (sortByTimeType === 1) {
+    jobs.sort((a: Job, b: Job) => {
+      return (
+        new Date(b.dateApplied).getTime() - new Date(a.dateApplied).getTime()
+      );
+    });
+  }
+
+  if (limit !== undefined) {
+    const limitJobs = parseInt(limit);
+    jobs = jobs.slice(0, limitJobs);
+  }
+
   const template = await env.load("./components/jobsListData.vto");
   const result = await template({
     jobs: jobs,

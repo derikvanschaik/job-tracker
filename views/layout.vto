@@ -33,7 +33,6 @@
         </ul>
     </nav>
     <div>
-        <progress id="loading" style="display:none;"></progress>
 
         {{content}}
     </div>
@@ -48,21 +47,6 @@
         const dialog = document.querySelector("#create-new");
         dialog.setAttribute("open", "false")
     }
-  document.body.addEventListener('htmx:configRequest', function() {
-    document.getElementById('loading').style.display = 'block';
-  });
-
-  document.body.addEventListener('htmx:load', function() {
-    document.getElementById('loading').style.display = 'none';
-  });
-
-  document.body.addEventListener('htmx:beforeSwap', function() {
-    document.getElementById('loading').style.display = 'none';
-  });
-
-  document.body.addEventListener('htmx:responseError', function() {
-    document.getElementById('loading').style.display = 'none';
-  });
 
 </script>
 </html>

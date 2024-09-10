@@ -1,13 +1,13 @@
 {{ layout "./layout.vto" { includeScript : false} }}
 
     <div class="dashboard-container">
-        <div class="grid" hx-get="/stats" hx-trigger="load, refreshData from:body">
+        <div class="grid" hx-get="/stats" hx-trigger="load, refreshData from:body" hx-target="this">
         </div>
 
         <div class="grid">
             <article>
                 <header>Recent Applications</header>
-                {{ include '../components/jobList.vto'}}
+                {{ include '../components/jobList.vto' {queryParams: 'limit=5&sort=0'} }}
                 <footer>
                     <a href="/browse">View All</a>
                 </footer>

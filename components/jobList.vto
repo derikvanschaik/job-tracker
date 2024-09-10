@@ -10,6 +10,6 @@
         </tr>
     </thead>
 
-    <tbody hx-get="/jobs" hx-trigger="load, refreshData from:body">
+    <tbody hx-get="/jobs?{{queryParams}}" hx-trigger="load, refreshData from:body">
     </tbody>
 </table>
